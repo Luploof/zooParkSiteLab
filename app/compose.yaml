@@ -24,7 +24,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/zoo_park
       - SPRING_DATASOURCE_USERNAME=zoo_user
       - SPRING_DATASOURCE_PASSWORD=secret
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQLDialect
       - MAIL_HOST=smtp.yandex.com
       - MAIL_PORT=465
       - MAIL_USERNAME=${MAIL_USERNAME}
