@@ -1,0 +1,12 @@
+# секреты
+.env
+application-local.properties
+
+# сборка и IDE
+build/
+.gradle/
+out/
+target/
+.idea/
+*.iml
+.vscode/

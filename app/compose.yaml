@@ -1,0 +1,43 @@
+services:
+  mysql:
+    image: "mysql:8.0"
+    container_name: zoo-park-mysql
+    environment:
+      MYSQL_DATABASE: zoo_park
+      MYSQL_USER: zoo_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: verysecret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - zoo-network
+
+  zoo-park-app:
+    build: .
+    container_name: zoo-park-spring-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/zoo_park
+      - SPRING_DATASOURCE_USERNAME=zoo_user
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - MAIL_HOST=smtp.yandex.com
+      - MAIL_PORT=465
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - zoo-network
+
+volumes:
+  mysql_data:
+
+networks:
+  zoo-network:
+    driver: bridge
