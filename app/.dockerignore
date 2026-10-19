@@ -1,5 +1,7 @@
 # Build output is required by Dockerfile.
-.gradle/
-.git/
-.idea/
-*.log
+.git
+.gradle
+build
+.idea
+*.iml
+.env
