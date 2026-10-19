@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.io.ClassPathResource;
+import java.io.InputStream;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -67,9 +69,11 @@ public class TicketController {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf, PageSize.A6.rotate());
 
-        String fontResource = "src/main/resources/arialmt.ttf";
-        PdfFont font = PdfFontFactory.createFont(fontResource, PdfEncodings.IDENTITY_H);
-
+        byte[] fontBytes;
+        try (InputStream in = new ClassPathResource("arialmt.ttf").getInputStream()) {
+            fontBytes = in.readAllBytes();
+        }
+        PdfFont font = PdfFontFactory.createFont(fontBytes, PdfEncodings.IDENTITY_H);
 
         Paragraph title = new Paragraph("Зоопарк \"Зелёный Мир\"")
                 .setFont(font)
